@@ -1,4 +1,4 @@
-package p3;
+package ChessGame;
 
 import java.awt.Dimension;
 
