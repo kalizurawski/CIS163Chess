@@ -73,7 +73,7 @@ public class ChessPanel extends JPanel {
 
         // add extras
         wTurn = true;                                   // white starts out
-        turn = new JLabel("White's Turn");
+        turn = new JLabel("");
         buttonpanel.add(turn);
         undo = new JButton("UNDO");
         undo.addActionListener(listener);
@@ -178,20 +178,20 @@ public class ChessPanel extends JPanel {
      ************************************************************/
     private void createIcons() {
         // Sets the Image for white player pieces
-        wRook = new ImageIcon("ImageFiles/wRook.png");
-        wBishop = new ImageIcon("ImageFiles/wBishop.png");
-        wQueen = new ImageIcon("ImageFiles/wQueen.png");
-        wKing = new ImageIcon("ImageFiles/wKing.png");
-        wPawn = new ImageIcon("ImageFiles/wPawn.png");
-        wKnight = new ImageIcon("ImageFiles/wKnight.png");
+        wRook = new ImageIcon("wRook.png");
+        wBishop = new ImageIcon("wBishop.png");
+        wQueen = new ImageIcon("wQueen.png");
+        wKing = new ImageIcon("wKing.png");
+        wPawn = new ImageIcon("wPawn.png");
+        wKnight = new ImageIcon("wKnight.png");
 
         // Sets the Image for black player pieces
-        bRook = new ImageIcon("ImageFiles/bRook.png");
-        bBishop = new ImageIcon("ImageFiles/bBishop.png");
-        bQueen = new ImageIcon("ImageFiles/bQueen.png");
-        bKing = new ImageIcon("ImageFiles/bKing.png");
-        bPawn = new ImageIcon("ImageFiles/bPawn.png");
-        bKnight = new ImageIcon("ImageFiles/bKnight.png");
+        bRook = new ImageIcon("bRook.png");
+        bBishop = new ImageIcon("bBishop.png");
+        bQueen = new ImageIcon("bQueen.png");
+        bKing = new ImageIcon("bKing.png");
+        bPawn = new ImageIcon("bPawn.png");
+        bKnight = new ImageIcon("bKnight.png");
     }
 
     /*************************************************************
@@ -258,6 +258,7 @@ public class ChessPanel extends JPanel {
                         board[r][c].setIcon(bKing);
             }
         }
+        revalidate();
         repaint();
     }
 
