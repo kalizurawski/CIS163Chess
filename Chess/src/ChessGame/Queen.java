@@ -1,4 +1,4 @@
-package ChessGame;
+//package p3;
 
 public class Queen extends ChessPiece {
 
@@ -18,3 +18,4 @@ public class Queen extends ChessPiece {
         return (move1.isValidMove(move, board) || move2.isValidMove(move, board));
     }
 }
+
