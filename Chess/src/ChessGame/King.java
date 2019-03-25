@@ -1,4 +1,4 @@
-package ChessGame;
+package Project_3.IChess;
 
 public class King extends ChessPiece {
 
@@ -17,7 +17,7 @@ public class King extends ChessPiece {
                 move.toRow - move.fromRow < -1 || move.toColumn - move.fromColumn < -1)
             return valid;
         // More code is needed
-        return valid;
+        return true;
     }
 }
 

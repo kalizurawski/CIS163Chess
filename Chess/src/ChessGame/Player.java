@@ -1,4 +1,4 @@
-package ChessGame;
+package Project_3.IChess;
 
 // DO NOT CHANGE THIS CLASS
 // ITS IN THE RUBRIC
