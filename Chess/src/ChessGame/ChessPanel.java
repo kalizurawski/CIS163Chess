@@ -258,7 +258,6 @@ public class ChessPanel extends JPanel {
                         board[r][c].setIcon(bKing);
             }
         }
-        revalidate();
         repaint();
     }
 
