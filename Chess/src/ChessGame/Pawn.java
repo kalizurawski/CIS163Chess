@@ -20,13 +20,6 @@ public class Pawn extends ChessPiece {
             return valid;
 
         if (player() == Player.WHITE) {                                       //WHITE to < from
-//            //en pasant check require Move to have get piece
-//            if(prevMove.toRow - prevMove.fromRow == 2 && prevMove.type() == "Pawn" &&
-//            && (move.toColumn - move.fromColumn == 1 || move.toColumn - move.fromColumn == -1) &&
-//            && (prevMove.toColumn - move.fromColumn == 1 || prevMove.toColumn - move.fromColumn == -1) &&
-//            && move.toColumn == prevMove.fromColumn && move.toRow - prevMove.toRow == 1){
-//                return true;
-//            }
             if (move.toRow > move.fromRow) {
                 return valid;
             }

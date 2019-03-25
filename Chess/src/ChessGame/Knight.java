@@ -19,6 +19,7 @@ public class Knight extends ChessPiece {
         if (!super.isValidMove(move, board))
             return valid;
 
+        // only allow to move in an L shape
         if (!(delRow == 1 && delCol == 2 || delRow == 1 && delCol == -2 ||
                 delRow == -1 && delCol == 2 || delRow == -1 && delCol == -2 ||
                 delRow == 2 && delCol == 1 || delRow == 2 && delCol == -1 ||
@@ -27,7 +28,6 @@ public class Knight extends ChessPiece {
         }
 
         valid = true;
-        // More code is needed
         return valid;
     }
 

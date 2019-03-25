@@ -12,8 +12,11 @@ public class Bishop extends ChessPiece {
 
     public boolean isValidMove(Move move, IChessPiece[][] board) {
 
-        //boolean superValid = super.isValidMove(move, board);
         boolean valid = false;
+        // check parent class if the move is valid
+        if (!super.isValidMove(move, board))
+            return valid;
+
         String direction = "";      //Finds direction of movement
 
         for(int n = 0; (move.fromRow + n < 8) && move.fromColumn + n < 8; n++){
@@ -69,7 +72,6 @@ public class Bishop extends ChessPiece {
         }//switch end
 
         return valid;
-        // More code is needed
 
     }
 }

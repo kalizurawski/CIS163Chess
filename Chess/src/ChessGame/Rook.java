@@ -28,7 +28,7 @@ public class Rook extends ChessPiece {
         if(move.fromRow == move.toRow){
             if(move.toColumn > move.fromColumn){ // to the right
                 for(int n = 1; move.fromColumn + n != move.toColumn; n++){          //increment from from to to
-                    if(board[move.fromRow][move.fromColumn + n] != null){ //if to the right is not empty
+                    if(board[move.fromRow][move.fromColumn + n] != null){           //if to the right is not empty
                         return valid;
                     }
                 }
@@ -36,7 +36,7 @@ public class Rook extends ChessPiece {
             }
             if(move.toColumn < move.fromColumn){ // to the left
                 for(int n = 1; move.fromColumn - n != move.toColumn; n++){
-                    if(board[move.fromRow][move.fromColumn - n] != null){ //if to the left is not empty
+                    if(board[move.fromRow][move.fromColumn - n] != null){           //if to the left is not empty
                         return valid;
                     }
                 }
@@ -45,7 +45,7 @@ public class Rook extends ChessPiece {
         }if (move.fromColumn == move.toColumn){
             if(move.toRow > move.fromRow){ // DOWN
                 for(int n = 1; move.fromRow + n != move.toRow; n++){
-                    if(board[move.fromRow + n][move.fromColumn] != null){//if down is not empty
+                    if(board[move.fromRow + n][move.fromColumn] != null){           //if down is not empty
                         return valid;
                     }
                 }
@@ -54,7 +54,7 @@ public class Rook extends ChessPiece {
             if(move.toRow < move.fromRow){ // UP
                 if(move.toRow > move.fromRow){ // DOWN
                     for(int n = 1; move.fromRow - n != move.toRow; n++){
-                        if(board[move.fromRow - n][move.fromColumn] != null){//if up is not empty
+                        if(board[move.fromRow - n][move.fromColumn] != null){       //if up is not empty
                             return valid;
                         }
                     }

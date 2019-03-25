@@ -17,10 +17,10 @@ public class King extends ChessPiece {
         if (!super.isValidMove(move, board))
             return valid;
 
+        // allowed to move in any direction but only one spot
         if(move.toRow - move.fromRow > 1 || move.toColumn - move.fromColumn > 1 ||
                 move.toRow - move.fromRow < -1 || move.toColumn - move.fromColumn < -1)
             return valid;
-        // More code is needed
         return true;
     }
 }

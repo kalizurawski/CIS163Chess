@@ -26,9 +26,10 @@ public abstract class ChessPiece implements IChessPiece {
 
         //Verify that you aren't attacking your own piece
         if(board[move.toRow][move.toColumn] != null) {
-            if (this.owner == board[move.toRow][move.toColumn].player())
+            if (this.owner == board[move.toRow][move.toColumn].player()) {
                 System.out.println("Attacking own piece. Can't move.");
                 return valid;
+            }
         }
 
         return true;
