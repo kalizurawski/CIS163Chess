@@ -52,13 +52,13 @@ public class Rook extends ChessPiece {
                 valid = true;
             }
             if(move.toRow < move.fromRow){ // UP
-                if(move.toRow > move.fromRow){ // DOWN
-                    for(int n = 1; move.fromRow - n != move.toRow; n++){
-                        if(board[move.fromRow - n][move.fromColumn] != null){       //if up is not empty
-                            return valid;
-                        }
+                System.out.println("ayuh");
+                for(int n = 1; move.fromRow - n != move.toRow; n++){
+                    if(board[move.fromRow - n][move.fromColumn] != null){       //if up is not empty
+                        return valid;
                     }
                 }
+
                 valid = true;
             }
         }
