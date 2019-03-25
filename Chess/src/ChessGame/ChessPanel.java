@@ -273,21 +273,23 @@ public class ChessPanel extends JPanel {
                 for (int r = 0; r < model.numRows(); r++)
                     for (int c = 0; c < model.numColumns(); c++)
                         if (board[r][c] == event.getSource())
-                            if (firstTurnFlag) {                                    // piece to move
-                                fromRow = r;
-                                fromCol = c;
-                                firstTurnFlag = false;
-                            } else {                                                // place to move
-                                toRow = r;
-                                toCol = c;
-                                firstTurnFlag = true;
-                                Move m = new Move(fromRow, fromCol, toRow, toCol);
-                                if ((model.isValidMove(m))) {                       // only make the move if it is valid
-                                    updateTurn();                                   // toggle who's turn it is
-                                    model.move(m);
-                                    displayBoard();
+                                if (firstTurnFlag) {
+                                    if(!model.checkEmpty(r, c) && model.checkPlayer(r,c)) {                              // piece to move
+                                    fromRow = r;
+                                    fromCol = c;
+                                    firstTurnFlag = false;
+                                    }
+                                } else {                                                // place to move
+                                    toRow = r;
+                                    toCol = c;
+                                    firstTurnFlag = true;
+                                    Move m = new Move(fromRow, fromCol, toRow, toCol);
+                                    if ((model.isValidMove(m))) {                       // only make the move if it is valid
+                                        updateTurn();                                   // toggle who's turn it is
+                                        model.move(m);
+                                        displayBoard();
+                                    }
                                 }
-                            }
             }
 
         }

@@ -166,4 +166,12 @@ public class ChessModel implements IChessModel {
         //if everything is fine from above, randomly move a piece forward.
 
     }
+
+    public boolean checkEmpty(int r, int c){
+        return board[r][c] == null;
+    }
+
+    public boolean checkPlayer(int r, int c){
+        return player == board[r][c].player();
+    }
 }
