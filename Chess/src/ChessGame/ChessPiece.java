@@ -23,6 +23,9 @@ public abstract class ChessPiece implements IChessPiece {
             return valid;
         }
 
+        //Verify that it is your turn
+//        if (this.owner != current)
+//            return valid;
 
         //Verify that you aren't attacking your own piece
         if(board[move.toRow][move.toColumn] != null) {

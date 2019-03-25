@@ -12,7 +12,6 @@ public class ChessModel implements IChessModel {
      ************************************************************/
     public ChessModel() {
         board = new IChessPiece[8][8];
-        player = Player.WHITE;
 
         board[7][0] = new Rook(Player.WHITE);
         board[7][1] = new Knight(Player.WHITE);
@@ -25,7 +24,6 @@ public class ChessModel implements IChessModel {
         for (int i = 0; i < 8; i++) {
             board[6][i] = new Pawn(Player.WHITE);
         }
-        player = Player.BLACK;
 
         board[0][0] = new Rook(Player.BLACK);
         board[0][1] = new Knight(Player.BLACK);
@@ -38,6 +36,7 @@ public class ChessModel implements IChessModel {
         for (int i = 0; i < 8; i++) {
             board[1][i] = new Pawn(Player.BLACK);
         }
+        player = Player.WHITE;
     }
     /*************************************************************
      *
@@ -51,10 +50,10 @@ public class ChessModel implements IChessModel {
      *
      ************************************************************/
     public boolean isValidMove(Move move) {
-        // add in the ability to take other pieces.
         boolean valid = false;
-
-            if (board[move.fromRow][move.fromColumn] != null)
+            if (currentPlayer() != board[move.fromRow][move.fromColumn].player())
+                return valid;
+            else if (board[move.fromRow][move.fromColumn] != null)
                 if (board[move.fromRow][move.fromColumn].isValidMove(move, board) == true)
                     valid = true;
 
@@ -64,11 +63,8 @@ public class ChessModel implements IChessModel {
      *
      ************************************************************/
     public void move(Move move) {
-        // finished
-        if (isValidMove(move)) {
-            board[move.toRow][move.toColumn] = board[move.fromRow][move.fromColumn];
-            board[move.fromRow][move.fromColumn] = null;
-        }
+        board[move.toRow][move.toColumn] = board[move.fromRow][move.fromColumn];
+        board[move.fromRow][move.fromColumn] = null;
     }
     /*************************************************************
      *

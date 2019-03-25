@@ -40,7 +40,6 @@ public class ChessPanel extends JPanel {
 
     /** turn variables **/
     private JLabel turn;
-    private boolean wTurn;
 
 
     public ChessPanel() {
@@ -72,8 +71,7 @@ public class ChessPanel extends JPanel {
         boardpanel.setPreferredSize(new Dimension(600, 600));
 
         // add extras
-        wTurn = true;                                   // white starts out
-        turn = new JLabel("");
+        turn = new JLabel("White's Turn");
         buttonpanel.add(turn);
         undo = new JButton("UNDO");
         undo.addActionListener(listener);
@@ -200,8 +198,8 @@ public class ChessPanel extends JPanel {
      * Description : updates who's turn it is
      ************************************************************/
     private void updateTurn() {
-        wTurn = !wTurn;     // switch who's turn it is
-        if (wTurn)  // white's turn
+        model.setNextPlayer();                      // switch who's turn it is
+        if (model.currentPlayer() == Player.WHITE)
             turn.setText("White's Turn");
         else
             turn.setText("Black's Turn");
