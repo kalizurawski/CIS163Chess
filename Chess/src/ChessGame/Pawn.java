@@ -24,10 +24,17 @@ public class Pawn extends ChessPiece {
                 return valid;
             }
             if (move.fromColumn == move.toColumn) {
+                if(move.fromRow - move.toRow == 2){
+                    if(board[move.fromRow + 1][move.fromColumn] != null)
+                        return valid;
+                }
                 if (move.fromRow - move.toRow > 2) {
                     return valid;
                 }
                 if (move.fromRow - move.toRow == 2 && move.fromRow != 6) {
+                    return valid;
+                }
+                if(board[move.toRow][move.toColumn] != null) {
                     return valid;
                 }
             } else if (move.toColumn - move.fromColumn > 1 || move.toColumn - move.fromColumn < -1) {
@@ -44,10 +51,17 @@ public class Pawn extends ChessPiece {
                 return valid;
             }
             if (move.fromColumn == move.toColumn) {
+                if(move.fromRow - move.toRow == -2){
+                    if(board[move.fromRow - 1][move.fromColumn] != null)
+                        return valid;
+                }
                 if (move.fromRow - move.toRow < -2) {
                     return valid;
                 }
                 if (move.fromRow - move.toRow == -2 && move.fromRow != 1) {
+                    return valid;
+                }
+                if(board[move.toRow][move.toColumn] != null) {
                     return valid;
                 }
             } else if (move.toColumn - move.fromColumn > 1 || move.toColumn - move.fromColumn < -1) {
