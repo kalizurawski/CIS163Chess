@@ -1,4 +1,4 @@
-package Project_3.IChess;
+package ChessGame;
 
 public class Bishop extends ChessPiece {
 

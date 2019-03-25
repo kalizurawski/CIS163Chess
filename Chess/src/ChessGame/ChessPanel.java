@@ -1,4 +1,4 @@
-package Project_3.IChess;
+package ChessGame;
 
 import java.awt.*;
 import java.awt.event.*;

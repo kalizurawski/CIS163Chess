@@ -1,4 +1,4 @@
-package Project_3.IChess;
+package ChessGame;
 
 public class Knight extends ChessPiece {
 
@@ -11,11 +11,13 @@ public class Knight extends ChessPiece {
     }
 
     public boolean isValidMove(Move move, IChessPiece[][] board){
-
-        boolean superValid = super.isValidMove(move, board);
         boolean valid = false;
         int delRow = move.toRow -  move.fromRow;
         int delCol = move.toColumn - move.fromColumn;
+
+        // check parent class if the move is valid
+        if (!super.isValidMove(move, board))
+            return valid;
 
         if (!(delRow == 1 && delCol == 2 || delRow == 1 && delCol == -2 ||
                 delRow == -1 && delCol == 2 || delRow == -1 && delCol == -2 ||

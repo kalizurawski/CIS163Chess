@@ -1,4 +1,4 @@
-package Project_3.IChess;
+package ChessGame;
 
 
 // DO NOT CHANGE THIS CLASS

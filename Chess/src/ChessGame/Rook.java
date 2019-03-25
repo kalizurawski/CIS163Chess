@@ -1,4 +1,4 @@
-package Project_3.IChess;
+package ChessGame;
 
 public class Rook extends ChessPiece {
 
@@ -16,11 +16,11 @@ public class Rook extends ChessPiece {
 
     // determines if the move is valid for a rook piece
     public boolean isValidMove(Move move, IChessPiece[][] board) {
-
-        //Checks parent class if isValidMove
-       // boolean superValid = super.isValidMove(move, board);
         boolean valid = false;
-        // More code is needed
+
+        // check parent class if the move is valid
+        if (!super.isValidMove(move, board))
+            return valid;
 
         //if in-line
         //Pick Direction

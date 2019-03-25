@@ -1,4 +1,4 @@
-package Project_3.IChess;
+package ChessGame;
 
 public class Pawn extends ChessPiece {
 
@@ -14,6 +14,10 @@ public class Pawn extends ChessPiece {
     public boolean isValidMove(Move move, IChessPiece[][] board) {
         Move prevMove = new Move();
         boolean valid = false;
+
+        // check parent class if the move is valid
+        if (!super.isValidMove(move, board))
+            return valid;
 
         if (player() == Player.WHITE) {                                       //WHITE to < from
 //            //en pasant check require Move to have get piece
@@ -62,38 +66,6 @@ public class Pawn extends ChessPiece {
             }
             valid = true;
         }
-
-
-/*
-        //pawn move based on color
-        if(board[move.fromRow][move.fromColumn].player() == Player.WHITE){      //WHITE
-            if(move.fromRow >= move.toRow)                                       //check right direction
-                return valid;
-            if(move.fromRow == 1){
-                if(move.toRow > 3)                                              //check no more than 2 spaces
-                    return valid;}
-            if(move.toRow != move.fromRow && board[move.toRow][move.toColumn] == null)
-                return valid;
-            if(move.toRow != move.fromRow + 1 &&                            //check attack is diagonal 1 unit
-                    !(move.toColumn != move.fromColumn + 1 || move.toColumn != move.fromColumn - 1))
-                if(board[move.toRow][move.toColumn].player() == Player.BLACK)
-                    return valid;
-                valid = true;
-        }
-
-        if(board[move.fromRow][move.fromColumn].player() == Player.BLACK){      //BLACK
-            if(move.fromRow <= move.toRow)                                       //check right direction
-                return valid;
-            if(move.fromRow == 6){
-                if(move.toRow < 4)                                               //check no more than 2 spaces
-                    return valid;}
-            if(move.toRow != move.fromRow - 1 &&                            //check attack is diagonal 1 unit
-                    !(move.toColumn == move.fromColumn + 1 || move.toColumn == move.fromColumn - 1))
-                if(board[move.toRow][move.toColumn].player() == Player.WHITE)
-                    return valid;
-                valid = true;
-        }
-*/
         return valid;
     }
 }
