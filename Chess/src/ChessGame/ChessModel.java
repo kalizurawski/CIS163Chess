@@ -7,6 +7,9 @@ public class ChessModel implements IChessModel {
 
     // declare other instance variables as needed
 
+    /*************************************************************
+     *
+     ************************************************************/
     public ChessModel() {
         board = new IChessPiece[8][8];
         player = Player.WHITE;
@@ -36,13 +39,17 @@ public class ChessModel implements IChessModel {
             board[1][i] = new Pawn(Player.BLACK);
         }
     }
-
+    /*************************************************************
+     *
+     ************************************************************/
     public boolean isComplete() {
         boolean valid = false;
-        if (checkMate = true) valid = true;
+        if (checkMate == true) valid = true;
         return valid;
     }
-
+    /*************************************************************
+     *
+     ************************************************************/
     public boolean isValidMove(Move move) {
         // add in the ability to take other pieces.
         boolean valid = false;
@@ -53,7 +60,9 @@ public class ChessModel implements IChessModel {
 
         return valid;
     }
-
+    /*************************************************************
+     *
+     ************************************************************/
     public void move(Move move) {
         // finished
         if (isValidMove(move)) {
@@ -61,39 +70,77 @@ public class ChessModel implements IChessModel {
             board[move.fromRow][move.fromColumn] = null;
         }
     }
-
+    /*************************************************************
+     *
+     ************************************************************/
     public boolean inCheck(Player p) {
         // add in code here to scan and check if the current player is in check
         boolean valid = false;
 
+        //int kingATX = 0;
+        //int kingATY = 0;
+        //for (int i = 0; i < 8 ; i++){
+          //  for (int j = 0; j < 8 ; j++) {
+                //add in logic to check if king can be taken
+            //    if (board[i][j] instanceof King) {
+              //  kingATX = i;
+                //kingATY = j;
+                //}
+            //}
+        //}
+        //for (int i = 0; i < 8 ; i++){
+          //  for (int j = 0; j < 8 ; j++) {
+                //add in logic to check if king can be taken
+            //    if (board[i][j].isValidMove(move();)) {
+              //      kingATX = i;
+                //    kingATY = j;
+               // }
+            //}
+        //}
+
         return valid;
     }
 
-
+    /*************************************************************
+     *
+     ************************************************************/
     public Player currentPlayer() {
         return player;
     }
-
+    /*************************************************************
+     *
+     ************************************************************/
     public int numRows() {
         return 8;
     }
-
+    /*************************************************************
+     *
+     ************************************************************/
     public int numColumns() {
         return 8;
     }
-
+    /*************************************************************
+     *
+     ************************************************************/
     public IChessPiece pieceAt(int row, int column) {
         return board[row][column];
     }
-
+    /*************************************************************
+     *
+     ************************************************************/
     public void setNextPlayer() {
         player = player.next();
     }
-
+    /*************************************************************
+     *
+     ************************************************************/
     public void setPiece(int row, int column, IChessPiece piece) {
         board[row][column] = piece;
     }
 
+    /*************************************************************
+     *
+     ************************************************************/
     public void AI() {
         /*
          * Write a simple AI set of rules in the following order.
@@ -113,6 +160,7 @@ public class ChessModel implements IChessModel {
          */
         if (inCheck(player)) {
             // make it so valid move is only moves that will protect the king
+
         }
 
         // add in a function of randomly moving valid pieces to spots where they cannot be taken/ can take the king.

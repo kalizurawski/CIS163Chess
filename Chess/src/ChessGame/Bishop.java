@@ -1,4 +1,4 @@
-package ChessGame;
+package Project_3.IChess;
 
 public class Bishop extends ChessPiece {
 
@@ -12,9 +12,10 @@ public class Bishop extends ChessPiece {
 
     public boolean isValidMove(Move move, IChessPiece[][] board) {
 
-        boolean superValid = super.isValidMove(move, board);
+        //boolean superValid = super.isValidMove(move, board);
         boolean valid = false;
         String direction = "";      //Finds direction of movement
+
         for(int n = 0; (move.fromRow + n < 8) && move.fromColumn + n < 8; n++){
             if((move.fromRow + n == move.toRow) && (move.fromColumn + n == move.toColumn))
                 direction = "NE";}
@@ -28,9 +29,9 @@ public class Bishop extends ChessPiece {
             if((move.fromRow - n == move.toRow) && (move.fromColumn - n == move.toColumn))
                 direction = "SW";}
         if(direction == ""){
-            //direction = "Not in path";
+            direction = "Not in path";
             return valid;}
-        //System.out.println(direction);
+        System.out.println(direction);
 
         switch (direction){
             case "NE":
@@ -67,7 +68,7 @@ public class Bishop extends ChessPiece {
                 break;
         }//switch end
 
-        return valid && superValid;
+        return valid;
         // More code is needed
 
     }

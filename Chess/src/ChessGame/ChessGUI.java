@@ -1,4 +1,4 @@
-package ChessGame;
+package Project_3.IChess;
 
 import java.awt.Dimension;
 

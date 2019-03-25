@@ -1,4 +1,4 @@
-package ChessGame;
+package Project_3.IChess;
 
 public class Rook extends ChessPiece {
 
@@ -18,7 +18,7 @@ public class Rook extends ChessPiece {
     public boolean isValidMove(Move move, IChessPiece[][] board) {
 
         //Checks parent class if isValidMove
-        boolean superValid = super.isValidMove(move, board);
+       // boolean superValid = super.isValidMove(move, board);
         boolean valid = false;
         // More code is needed
 
@@ -63,7 +63,7 @@ public class Rook extends ChessPiece {
             }
         }
 
-        return valid && superValid;
+        return valid;
     }
 
 }
