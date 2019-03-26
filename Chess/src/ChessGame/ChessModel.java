@@ -67,16 +67,11 @@ public class ChessModel implements IChessModel {
      *
      ************************************************************/
     public void move(Move move) {
-        board[move.toRow][move.toColumn] = board[move.fromRow][move.fromColumn];
-
-        stack.push(move.fromRow);
-        stack.push(move.fromColumn);
-        stack.push(move.toRow);
-        stack.push(move.toColumn);
 
         if(board[move.toRow][move.toColumn] != null){
             if(board[move.toRow][move.toColumn] instanceof Pawn){
                 stack.push(1);
+                System.out.println("you just took a pawn");
             }else if(board[move.toRow][move.toColumn] instanceof Knight){
                 stack.push(2);
             }else if(board[move.toRow][move.toColumn] instanceof Bishop){
@@ -89,6 +84,14 @@ public class ChessModel implements IChessModel {
         }else{
             stack.push(0);
         }
+
+        board[move.toRow][move.toColumn] = board[move.fromRow][move.fromColumn];
+
+        stack.push(move.fromRow);
+        stack.push(move.fromColumn);
+        stack.push(move.toRow);
+        stack.push(move.toColumn);
+
 
         board[move.fromRow][move.fromColumn] = null;
     }
@@ -147,11 +150,12 @@ public class ChessModel implements IChessModel {
         else{
             System.out.println(stack);
 
-            int pieceTaken = stack.pop();
+
             int fromCol = stack.pop();
             int fromRow = stack.pop();
             int toCol = stack.pop();
             int toRow = stack.pop();
+            int pieceTaken = stack.pop();
 
             System.out.println("from: " + fromRow + " , " + fromCol + " To: " + toRow + " , " + toCol);
             setPiece(toRow, toCol, pieceAt(fromRow, fromCol));
@@ -162,6 +166,7 @@ public class ChessModel implements IChessModel {
             else if(pieceTaken == 5)board[fromRow][fromCol] = new Queen(currentPlayer());
             else board[fromRow][fromCol] = null;
         }
+        setNextPlayer();
     }
 
     /*************************************************************
