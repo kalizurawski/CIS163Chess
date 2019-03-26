@@ -3,9 +3,7 @@ package ChessGame;
 public class ChessModel implements IChessModel {
     private IChessPiece[][] board;
     private Player player;
-    private boolean checkMate = false;
-
-    // declare other instance variables as needed
+    private Move m;
 
     /*************************************************************
      *
@@ -42,9 +40,155 @@ public class ChessModel implements IChessModel {
      *
      ************************************************************/
     public boolean isComplete() {
-        boolean valid = false;
-        if (checkMate == true) valid = true;
-        return valid;
+        int king1ATX = 0;        // king x position
+        int king1ATY = 0;        // king y position
+        int king2ATX = 0;        // king x position
+        int king2ATY = 0;        // king y position
+        int[] spaceList = new int[16];    //list for spaces around king
+        int counter = 0;
+
+        // scan board for king 1
+        for (int i = 0; i < 8 ; i++){
+            for (int j = 0; j < 8 ; j++) {
+                if (board[i][j] instanceof King) {
+                    king1ATX = j;
+                    king1ATY = i;
+                }
+            }
+        }
+
+        // scan board for king 2
+        for (int i = 0; i < 8 ; i++){
+            for (int j = 0; j < 8 ; j++) {
+                if ((board[i][j] instanceof King) && ((i != king1ATY) && (j != king1ATX))) {
+                    king2ATX = j;
+                    king2ATY = i;
+                }
+            }
+        }
+
+        // check end condition of first king
+        spaceList = checkValidKingMoves(king1ATX, king1ATY);
+        for(int i = 0; i < spaceList.length; i = i + 2) {
+            if (spaceList[i] >= 0) {    // make sure there is an entry there
+                // scan every row and every column for opposing player piece
+                for (int x = 0; x < 8; x++) {
+                    for(int y = 0; y < 8; y++) {
+                        if ((board[x][y] != null) && (board[x][y].player() != board[king1ATY][king1ATX].player())) {   // if it is the enemy player
+                            m = new Move(x, y, spaceList[i], spaceList[i + 1]);
+                            if (isValidMove(m))                          // increment if it can get to the king
+                                counter = counter + 1;
+                        }
+                    }
+                }
+            }
+        }
+
+        if (counter == (spaceList.length/2))
+            return true;
+        else
+            counter = 0;
+
+        // repeat for the other king
+        spaceList = checkValidKingMoves(king2ATX, king2ATY);
+        for(int i = 0; i < spaceList.length; i = i + 2) {
+            if (spaceList[i] >= 0) {    // make sure there is an entry there
+                // scan every row and every column for opposing player piece
+                for (int x = 0; x < 8; x++) {
+                    for(int y = 0; y < 8; y++) {
+                        if ((board[x][y] != null) && board[x][y].player() != board[king2ATY][king2ATX].player()) {   // if it is the enemy player
+                            m = new Move(x, y, spaceList[i], spaceList[i + 1]);
+                            if (isValidMove(m))                          // increment if it can get to the king
+                                counter = counter + 1;
+                        }
+                    }
+                }
+            }
+        }
+
+        if (counter == (spaceList.length/2))
+            return true;
+
+        return false;
+    }
+
+    private int[] checkValidKingMoves(int kingATX, int kingATY) {
+        int a = 0;
+        int[] spaceList = new int[16];
+        // 8 possible spaces around king
+        // check left
+        if (kingATX - 1 >= 0) {
+            m = new Move(kingATY, kingATX, kingATY, kingATX - 1);
+            if (isValidMove(m)) {
+                spaceList[a] = kingATY;
+                spaceList[a + 1] = kingATX - 1;
+                a = a + 2;
+            }
+        }
+        // check right
+        if (kingATX + 1 < 8) {
+            m = new Move(kingATY, kingATX, kingATY, kingATX + 1);
+            if (isValidMove(m)) {
+                spaceList[a] = kingATY;
+                spaceList[a + 1] = kingATX;
+                a = a + 2;
+            }
+        }
+        // check up
+        if (kingATY + 1 < 8) {
+            m = new Move(kingATY, kingATX, kingATY + 1, kingATX);
+            if (isValidMove(m)) {
+                spaceList[a] = kingATY + 1;
+                spaceList[a + 1] = kingATX;
+                a = a + 2;
+            }
+        }
+        // check down
+        if (kingATY - 1 >= 0) {
+            m = new Move(kingATY, kingATX, kingATY - 1, kingATX);
+            if (isValidMove(m)) {
+                spaceList[a] = kingATY;
+                spaceList[a + 1] = kingATX;
+                a = a + 2;
+            }
+        }
+        // check top left
+        if ((kingATY + 1 < 8) && (kingATX - 1 >= 0)) {
+            m = new Move(kingATY, kingATX, kingATY + 1, kingATX - 1);
+            if (isValidMove(m)) {
+                spaceList[a] = kingATY + 1;
+                spaceList[a + 1] = kingATX - 1;
+                a = a + 2;
+            }
+        }
+        // check top right
+        if ((kingATY + 1 < 8) && (kingATX + 1 < 8)) {
+            m = new Move(kingATY, kingATX, kingATY + 1, kingATX + 1);
+            if (isValidMove(m)) {
+                spaceList[a] = kingATY + 1;
+                spaceList[a + 1] = kingATX + 1;
+                a = a + 2;
+            }
+        }
+        // check down left
+        if ((kingATY - 1 >= 0) && (kingATX - 1 >= 0)) {
+            m = new Move(kingATY, kingATX, kingATY - 1, kingATX - 1);
+            if (isValidMove(m)) {
+                spaceList[a] = kingATY - 1;
+                spaceList[a + 1] = kingATX - 1;
+                a = a + 2;
+            }
+        }
+        // check down right
+        if ((kingATY - 1 >= 0) && (kingATX + 1 < 8)) {
+            m = new Move(kingATY, kingATX, kingATY - 1, kingATX + 1);
+            if (isValidMove(m)) {
+                spaceList[a] = kingATY - 1;
+                spaceList[a + 1] = kingATX + 1;
+            }
+        }
+
+        return spaceList;
     }
     /*************************************************************
      *
@@ -70,31 +214,31 @@ public class ChessModel implements IChessModel {
      *
      ************************************************************/
     public boolean inCheck(Player p) {
-        // add in code here to scan and check if the current player is in check
-        boolean valid = false;
+        boolean valid = true;
+        int kingATX = 0;        // king x position
+        int kingATY = 0;        // king y position
 
-        //int kingATX = 0;
-        //int kingATY = 0;
-        //for (int i = 0; i < 8 ; i++){
-          //  for (int j = 0; j < 8 ; j++) {
-                //add in logic to check if king can be taken
-            //    if (board[i][j] instanceof King) {
-              //  kingATX = i;
-                //kingATY = j;
-                //}
-            //}
-        //}
-        //for (int i = 0; i < 8 ; i++){
-          //  for (int j = 0; j < 8 ; j++) {
-                //add in logic to check if king can be taken
-            //    if (board[i][j].isValidMove(move();)) {
-              //      kingATX = i;
-                //    kingATY = j;
-               // }
-            //}
-        //}
+        // scan board for king
+        for (int i = 0; i < 8 ; i++){
+            for (int j = 0; j < 8 ; j++) {
+                if (board[i][j] instanceof King) {
+                    kingATY = i;
+                    kingATX = j;
+                }
+            }
+        }
 
-        return valid;
+        // scan every row and every column for opposing player piece
+        for (int i = 0; i < 8; i++) {
+            for(int j = 0; j < 8; j++) {
+                if ((board[i][j] != null) && (board[i][j].player() != p)) {   // if it is the enemy player
+                    m = new Move(i, j, kingATY, kingATX);
+                    if (isValidMove(m))                          // in check if it can get to the king
+                        return valid;
+                }
+            }
+        }
+        return false;
     }
 
     /*************************************************************

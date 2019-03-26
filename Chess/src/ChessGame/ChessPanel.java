@@ -6,16 +6,24 @@ import javax.swing.*;
 
 public class ChessPanel extends JPanel {
 
-    /** button array for board **/
+    /**
+     * button array for board
+     **/
     private JButton[][] board;
 
-    /** game model **/
+    /**
+     * game model
+     **/
     private ChessModel model;
 
-    /** extras **/
+    /**
+     * extras
+     **/
     private JButton undo;
 
-    /** white pieces **/
+    /**
+     * white pieces
+     **/
     private ImageIcon wRook;
     private ImageIcon wBishop;
     private ImageIcon wQueen;
@@ -23,7 +31,9 @@ public class ChessPanel extends JPanel {
     private ImageIcon wPawn;
     private ImageIcon wKnight;
 
-    /** black pieces **/
+    /**
+     * black pieces
+     **/
     private ImageIcon bRook;
     private ImageIcon bBishop;
     private ImageIcon bQueen;
@@ -38,8 +48,11 @@ public class ChessPanel extends JPanel {
     private int toCol;
     private listener listener;
 
-    /** turn variables **/
+    /**
+     * turn variables
+     **/
     private JLabel turn;
+    private JLabel check;
 
 
     public ChessPanel() {
@@ -73,6 +86,8 @@ public class ChessPanel extends JPanel {
         // add extras
         turn = new JLabel("White's Turn");
         buttonpanel.add(turn);
+        check = new JLabel("");
+        buttonpanel.add(check);
         undo = new JButton("UNDO");
         undo.addActionListener(listener);
         buttonpanel.add(undo);
@@ -206,6 +221,25 @@ public class ChessPanel extends JPanel {
     }
 
     /*************************************************************
+     * checkGameStatus
+     *
+     * Description : checks if players are in check or checkmate
+     ************************************************************/
+    private void checkGameStatus() {
+        if (model.isComplete())
+            check.setText("Game Over");
+        else if (model.inCheck(Player.WHITE) && model.inCheck(Player.BLACK))
+            check.setText("Both players in check!");
+        else if (model.inCheck(Player.WHITE))
+            check.setText("White in check!");
+        else if (model.inCheck(Player.BLACK))
+            check.setText("Black in check!");
+        else
+            check.setText("");
+    }
+
+
+    /*************************************************************
      * displayBoard
      *
      * Description : updates the board
@@ -216,8 +250,7 @@ public class ChessPanel extends JPanel {
             for (int c = 0; c < 8; c++)
                 if (model.pieceAt(r, c) == null)
                     board[r][c].setIcon(null);
-                else
-                if (model.pieceAt(r, c).player() == Player.WHITE) {
+                else if (model.pieceAt(r, c).player() == Player.WHITE) {
                     if (model.pieceAt(r, c).type().equals("Pawn"))
                         board[r][c].setIcon(wPawn);
 
@@ -254,10 +287,11 @@ public class ChessPanel extends JPanel {
 
                     if (model.pieceAt(r, c).type().equals("King"))
                         board[r][c].setIcon(bKing);
-            }
+                }
         }
         repaint();
     }
+
 
     /*************************************************************
      * Action listener for the buttons
@@ -266,32 +300,34 @@ public class ChessPanel extends JPanel {
         public void actionPerformed(ActionEvent event) {
 
             // if it was the undo button
-            if (undo == event.getSource());
+            if (undo == event.getSource()) ;
                 // TODO : link to undo function
-            else{
+            else {
                 // if it was the board
                 for (int r = 0; r < model.numRows(); r++)
                     for (int c = 0; c < model.numColumns(); c++)
                         if (board[r][c] == event.getSource())
-                                if (firstTurnFlag) {
-                                    if(!model.checkEmpty(r, c) && model.checkPlayer(r,c)) {                              // piece to move
+                            if (firstTurnFlag) {
+                                if (!model.checkEmpty(r, c) && model.checkPlayer(r, c)) {                              // piece to move
                                     fromRow = r;
                                     fromCol = c;
                                     firstTurnFlag = false;
-                                    }
-                                } else {                                                // place to move
-                                    toRow = r;
-                                    toCol = c;
-                                    firstTurnFlag = true;
-                                    Move m = new Move(fromRow, fromCol, toRow, toCol);
-                                    if ((model.isValidMove(m))) {                       // only make the move if it is valid
-                                        updateTurn();                                   // toggle who's turn it is
-                                        model.move(m);
-                                        displayBoard();
-                                    }
                                 }
-            }
+                            } else {                                                // place to move
+                                toRow = r;
+                                toCol = c;
+                                firstTurnFlag = true;
+                                Move m = new Move(fromRow, fromCol, toRow, toCol);
+                                if ((model.isValidMove(m))) {                       // only make the move if it is valid
+                                    updateTurn();                                   // toggle who's turn it is
+                                    model.move(m);
+                                    checkGameStatus();
+                                    displayBoard();
+                                }
 
+                            }
+
+            }
         }
     }
 }

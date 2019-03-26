@@ -19,18 +19,12 @@ public abstract class ChessPiece implements IChessPiece {
 
         //Verify start and finish are different
         if ((move.fromRow == move.toRow) && (move.fromColumn == move.toColumn)) {
-            System.out.println("Start and finish are same. Can't move.");
             return valid;
         }
-
-        //Verify that it is your turn
-//        if (this.owner != current)
-//            return valid;
 
         //Verify that you aren't attacking your own piece
         if(board[move.toRow][move.toColumn] != null) {
             if (this.owner == board[move.toRow][move.toColumn].player()) {
-                System.out.println("Attacking own piece. Can't move.");
                 return valid;
             }
         }
