@@ -34,7 +34,7 @@ public class Bishop extends ChessPiece {
         if(direction == ""){
             direction = "Not in path";
             return valid;}
-        System.out.println(direction);
+        //System.out.println(direction);
 
         switch (direction){
             case "NE":

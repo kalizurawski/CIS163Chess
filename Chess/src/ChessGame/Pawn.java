@@ -25,7 +25,7 @@ public class Pawn extends ChessPiece {
             }
             if (move.fromColumn == move.toColumn) {
                 if(move.fromRow - move.toRow == 2){
-                    if(board[move.fromRow + 1][move.fromColumn] != null)
+                    if(board[move.fromRow - 1][move.fromColumn] != null)
                         return valid;
                 }
                 if (move.fromRow - move.toRow > 2) {
@@ -52,7 +52,7 @@ public class Pawn extends ChessPiece {
             }
             if (move.fromColumn == move.toColumn) {
                 if(move.fromRow - move.toRow == -2){
-                    if(board[move.fromRow - 1][move.fromColumn] != null)
+                    if(board[move.fromRow + 1][move.fromColumn] != null)
                         return valid;
                 }
                 if (move.fromRow - move.toRow < -2) {
