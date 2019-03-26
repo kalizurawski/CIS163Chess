@@ -1,9 +1,13 @@
 package ChessGame;
 
+import java.util.Random;
+import java.util.Stack;
+
 public class ChessModel implements IChessModel {
     private IChessPiece[][] board;
     private Player player;
     private boolean checkMate = false;
+    Stack<Integer> stack = new Stack<>();
 
     // declare other instance variables as needed
 
@@ -64,6 +68,28 @@ public class ChessModel implements IChessModel {
      ************************************************************/
     public void move(Move move) {
         board[move.toRow][move.toColumn] = board[move.fromRow][move.fromColumn];
+
+        stack.push(move.fromRow);
+        stack.push(move.fromColumn);
+        stack.push(move.toRow);
+        stack.push(move.toColumn);
+
+        if(board[move.toRow][move.toColumn] != null){
+            if(board[move.toRow][move.toColumn] instanceof Pawn){
+                stack.push(1);
+            }else if(board[move.toRow][move.toColumn] instanceof Knight){
+                stack.push(2);
+            }else if(board[move.toRow][move.toColumn] instanceof Bishop){
+                stack.push(3);
+            }else if(board[move.toRow][move.toColumn] instanceof Rook){
+                stack.push(4);
+            }else if(board[move.toRow][move.toColumn] instanceof Queen){
+                stack.push(5);
+            }
+        }else{
+            stack.push(0);
+        }
+
         board[move.fromRow][move.fromColumn] = null;
     }
     /*************************************************************
@@ -72,27 +98,6 @@ public class ChessModel implements IChessModel {
     public boolean inCheck(Player p) {
         // add in code here to scan and check if the current player is in check
         boolean valid = false;
-
-        //int kingATX = 0;
-        //int kingATY = 0;
-        //for (int i = 0; i < 8 ; i++){
-          //  for (int j = 0; j < 8 ; j++) {
-                //add in logic to check if king can be taken
-            //    if (board[i][j] instanceof King) {
-              //  kingATX = i;
-                //kingATY = j;
-                //}
-            //}
-        //}
-        //for (int i = 0; i < 8 ; i++){
-          //  for (int j = 0; j < 8 ; j++) {
-                //add in logic to check if king can be taken
-            //    if (board[i][j].isValidMove(move();)) {
-              //      kingATX = i;
-                //    kingATY = j;
-               // }
-            //}
-        //}
 
         return valid;
     }
@@ -134,6 +139,31 @@ public class ChessModel implements IChessModel {
         board[row][column] = piece;
     }
 
+    public void undo(){
+        Integer top = stack.peek();
+        if(top == null ){
+            return;
+        }
+        else{
+            System.out.println(stack);
+
+            int pieceTaken = stack.pop();
+            int fromCol = stack.pop();
+            int fromRow = stack.pop();
+            int toCol = stack.pop();
+            int toRow = stack.pop();
+
+            System.out.println("from: " + fromRow + " , " + fromCol + " To: " + toRow + " , " + toCol);
+            setPiece(toRow, toCol, pieceAt(fromRow, fromCol));
+            if(pieceTaken == 1) board[fromRow][fromCol] = new Pawn(currentPlayer());
+            else if(pieceTaken == 2)board[fromRow][fromCol] = new Knight(currentPlayer());
+            else if(pieceTaken == 3)board[fromRow][fromCol] = new Bishop(currentPlayer());
+            else if(pieceTaken == 4)board[fromRow][fromCol] = new Rook(currentPlayer());
+            else if(pieceTaken == 5)board[fromRow][fromCol] = new Queen(currentPlayer());
+            else board[fromRow][fromCol] = null;
+        }
+    }
+
     /*************************************************************
      *
      ************************************************************/
@@ -158,8 +188,14 @@ public class ChessModel implements IChessModel {
             // make it so valid move is only moves that will protect the king
 
         }
+        else{
+            if(currentPlayer() == Player.BLACK){
+                // add in a function of randomly moving valid pieces to spots where they cannot be taken/ can take the king.
+                Random rn = new Random();
 
-        // add in a function of randomly moving valid pieces to spots where they cannot be taken/ can take the king.
+
+            }
+        }
 
         // if a piece can be taken, try to move it (potentially add in a priority for more important pieces, or just go for first one scanned)
 

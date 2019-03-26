@@ -266,8 +266,11 @@ public class ChessPanel extends JPanel {
         public void actionPerformed(ActionEvent event) {
 
             // if it was the undo button
-            if (undo == event.getSource());
+            if (undo == event.getSource()) {
                 // TODO : link to undo function
+                model.undo();
+                displayBoard();
+            }
             else{
                 // if it was the board
                 for (int r = 0; r < model.numRows(); r++)
