@@ -38,9 +38,6 @@ public class ChessPanel extends JPanel {
     private int toCol;
     private listener listener;
 
-    /** turn variables **/
-    private JLabel turn;
-
 
     public ChessPanel() {
         model = new ChessModel();                                   // creates chess model
@@ -71,8 +68,6 @@ public class ChessPanel extends JPanel {
         boardpanel.setPreferredSize(new Dimension(600, 600));
 
         // add extras
-        turn = new JLabel("White's Turn");
-        buttonpanel.add(turn);
         undo = new JButton("UNDO");
         undo.addActionListener(listener);
         buttonpanel.add(undo);
@@ -199,15 +194,8 @@ public class ChessPanel extends JPanel {
      ************************************************************/
     private void updateTurn() {
         model.setNextPlayer();                      // switch who's turn it is
-        if (model.currentPlayer() == Player.WHITE)
-            turn.setText("White's Turn");
-
-        else {
-            turn.setText("Black's Turn");
-            model.AI();
-            displayBoard();
-        }
-
+        model.AI();
+        displayBoard();
     }
 
     /*************************************************************

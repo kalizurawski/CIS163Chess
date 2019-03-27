@@ -8,7 +8,9 @@ public class ChessModel implements IChessModel {
     private Player player;
     private boolean checkMate = false;
     Stack<Integer> stack = new Stack<>();
+    private Move m;
     int movex, movey;
+    int toSpaceX, toSpaceY, fromSpaceX, fromSpaceY;
 
     // declare other instance variables as needed
 
@@ -65,8 +67,9 @@ public class ChessModel implements IChessModel {
      *
      ************************************************************/
     public boolean isValidMove(Move move) {
+
         boolean valid = false;// create boolean to check if valid
-        if (currentPlayer() != board[move.fromRow][move.fromColumn].player()) // if the current player doesnt own a piece, dont move it
+        if (board[move.fromRow][move.fromColumn] != null && currentPlayer() != board[move.fromRow][move.fromColumn].player()) // if the current player doesnt own a piece, dont move it
             return valid;
         else if (board[move.fromRow][move.fromColumn] != null) // otherwise check if a valid move is being made and make it.
             if (board[move.fromRow][move.fromColumn].isValidMove(move, board) == true)
@@ -104,11 +107,7 @@ public class ChessModel implements IChessModel {
         stack.push(move.toRow);
         stack.push(move.toColumn);
         board[move.toRow][move.toColumn] = board[move.fromRow][move.fromColumn];// move the piece
-
-
-
-
-        board[move.fromRow][move.fromColumn] = null; // remove the peices from its last position.
+        board[move.fromRow][move.fromColumn] = null; // remove the pieces from its last position.
     }
 
     /*************************************************************
@@ -213,249 +212,379 @@ public class ChessModel implements IChessModel {
         setNextPlayer(); // set the next player in order to keep playing and give back the proper pieces
     }
 
-    public boolean canMakeMoveAI(int x, int y) {
+    public boolean randomMove(int x, int y) {
         boolean valid = false;
         if (board[x][y] instanceof Pawn && board[x][y].player() == Player.BLACK) {
             if (x < 7) {
-                if (board[x + 1][y] == null) {
-                    movex = 1;
+                m = new Move(x, y, x + 1, y);
+                if (isValidMove(m)) {
+                    fromSpaceX = x;
+                    fromSpaceY = y;
+                    toSpaceX = x + 1;
+                    toSpaceY = y;
                     return true;
                 }
             }
-        } else if (board[x][y] instanceof Knight&& board[x][y].player() == Player.BLACK) {
+        } else if (board[x][y] instanceof Knight && board[x][y].player() == Player.BLACK) {
             if (y < 7 && x < 6) {
-                if (board[x + 2][y + 1] == null) {
-                    movex = 2;
-                    movey = 1;
+                m = new Move(x, y, x + 2, y + 1);
+                if (isValidMove(m)) {
+                    fromSpaceX = x;
+                    fromSpaceY = y;
+                    toSpaceX = x + 2;
+                    toSpaceY = y + 1;
                     return true;
                 }
             }
             if (y > 0 && x < 6) {
-                if (board[x + 2][y - 1] == null) {
-                    movex = 2;
-                    movey = -1;
+                m = new Move(x, y, x + 2, y - 1);
+                if (isValidMove(m)) {
+                    fromSpaceX = x;
+                    fromSpaceY = y;
+                    toSpaceX = x + 2;
+                    toSpaceY = y - 1;
                     return true;
                 }
             }
             if (y < 7 && x > 1) {
-                if (board[x - 2][y + 1] == null) {
-                    movex = -2;
-                    movey = 1;
+                m = new Move(x, y, x - 2, y + 1);
+                if (isValidMove(m)) {
+                    fromSpaceX = x;
+                    fromSpaceY = y;
+                    toSpaceX = x - 2;
+                    toSpaceY = y + 1;
                     return true;
                 }
             }
             if (y > 0 && x > 1) {
-                if (board[x - 2][y - 1] == null) {
-                    movex = -2;
-                    movey = -1;
+                m = new Move(x, y, x - 2, y - 1);
+                if (isValidMove(m)) {
+                    fromSpaceX = x;
+                    fromSpaceY = y;
+                    toSpaceX = x - 2;
+                    toSpaceY = y - 1;
                     return true;
                 }
             }
             if (y < 6 && x < 7) {
-                if (board[x + 1][y + 2] == null) {
-                    movex = 1;
-                    movey = 2;
+                m = new Move(x, y, x + 1, y + 2);
+                if (isValidMove(m)) {
+                    fromSpaceX = x;
+                    fromSpaceY = y;
+                    toSpaceX = x + 1;
+                    toSpaceY = y + 2;
                     return true;
                 }
             }
             if (y < 6 && x > 0) {
-                if (board[x - 1][y + 2] == null) {
-                    movex = -1;
-                    movey = 2;
+                m = new Move(x, y, x - 1, y + 2);
+                if (isValidMove(m)) {
+                    fromSpaceX = x;
+                    fromSpaceY = y;
+                    toSpaceX = x - 1;
+                    toSpaceY = y + 2;
                     return true;
                 }
             }
             if (y > 1 && x > 0) {
-                if (board[x - 1][y - 2] == null) {
-                    movex = -1;
-                    movey = -2;
+                m = new Move(x, y, x - 1, y - 2);
+                if (isValidMove(m)) {
+                    fromSpaceX = x;
+                    fromSpaceY = y;
+                    toSpaceX = x - 1;
+                    toSpaceY = y - 2;
                     return true;
                 }
             }
             if (y > 1 && x < 7) {
-                if (board[x + 1][y - 2] == null) {
-                    movex = 1;
-                    movey = -2;
+                m = new Move(x, y, x + 1, y - 2);
+                if (isValidMove(m)) {
+                    fromSpaceX = x;
+                    fromSpaceY = y;
+                    toSpaceX = x + 1;
+                    toSpaceY = y - 2;
                     return true;
                 }
             }
-        } else if (board[x][y] instanceof Rook&& board[x][y].player() == Player.BLACK) {
+        } else if (board[x][y] instanceof Rook && board[x][y].player() == Player.BLACK) {
             if (x < 7) {
-                if (board[x + 1][y] == null) {
-                    movex = 1;
-                    movey = 0;
+                m = new Move(x, y, x + 1, y);
+                if (isValidMove(m)) {
+                    fromSpaceX = x;
+                    fromSpaceY = y;
+                    toSpaceX = x + 1;
+                    toSpaceY = y;
                     return true;
                 }
             }
             if (y < 7) {
-                if (board[x][y + 1] == null) {
-                    movex = 0;
-                    movey = 1;
+                m = new Move(x, y, x, y + 1);
+                if (isValidMove(m)) {
+                    fromSpaceX = x;
+                    fromSpaceY = y;
+                    toSpaceX = x;
+                    toSpaceY = y + 1;
                     return true;
                 }
             }
             if (x > 0) {
-                if (board[x - 1][y] == null) {
-                    movex = -1;
-                    movey = 0;
+                m = new Move(x, y, x - 1, y);
+                if (isValidMove(m)) {
+                    fromSpaceX = x;
+                    fromSpaceY = y;
+                    toSpaceX = x - 1;
+                    toSpaceY = y;
                     return true;
                 }
             }
             if (y > 0) {
-                if (board[x][y - 1] == null) {
-                    movex = 0;
-                    movey = -1;
+                m = new Move(x, y, x, y - 1);
+                if (isValidMove(m)) {
+                    fromSpaceX = x;
+                    fromSpaceY = y;
+                    toSpaceX = x;
+                    toSpaceY = y - 1;
                     return true;
                 }
             }
-        } else if (board[x][y] instanceof Bishop&& board[x][y].player() == Player.BLACK) {
+        } else if (board[x][y] instanceof Bishop && board[x][y].player() == Player.BLACK) {
             if (y < 7 && x < 7) {
-                if (board[x + 1][y + 1] == null) {
-                    movex = 1;
-                    movey = 1;
+                m = new Move(x, y, x + 1, y + 1);
+                if (isValidMove(m)) {
+                    fromSpaceX = x;
+                    fromSpaceY = y;
+                    toSpaceX = x + 1;
+                    toSpaceY = y + 1;
                     return true;
                 }
             }
             if (y < 7 && x > 0) {
-                if (board[x - 1][y + 1] == null) {
-                    movex = -1;
-                    movey = 1;
+                m = new Move(x, y, x - 1, y + 1);
+                if (isValidMove(m)) {
+                    fromSpaceX = x;
+                    fromSpaceY = y;
+                    toSpaceX = x - 1;
+                    toSpaceY = y + 1;
                     return true;
+                    }
                 }
             }
             if (y > 0 && x > 0) {
-                if (board[x - 1][y - 1] == null) {
-                    movex = -1;
-                    movey = -1;
+                m = new Move(x, y, x - 1, y - 1);
+                if (isValidMove(m)) {
+                    fromSpaceX = x;
+                    fromSpaceY = y;
+                    toSpaceX = x - 1;
+                    toSpaceY = y - 1;
                     return true;
                 }
             }
             if (y > 1 && x < 7) {
-                if (board[x + 1][y - 1] == null) {
-                    movex = 1;
-                    movey = -1;
+                m = new Move(x, y, x + 1, y - 1);
+                if (isValidMove(m)) {
+                    fromSpaceX = x;
+                    fromSpaceY = y;
+                    toSpaceX = x + 1;
+                    toSpaceY = y - 1;
                     return true;
                 }
             }
-        } else if (board[x][y] instanceof Queen&& board[x][y].player() == Player.BLACK) {
+        else if (board[x][y] instanceof Queen && board[x][y].player() == Player.BLACK) {
             if (y < 7 && x < 7) {
-                if (board[x + 1][y + 1] == null) {
-                    movex = 1;
-                    movey = 1;
+                m = new Move(x, y, x + 1, y + 1);
+                if (isValidMove(m)) {
+                    fromSpaceX = x;
+                    fromSpaceY = y;
+                    toSpaceX = x + 1;
+                    toSpaceY = y + 1;
                     return true;
                 }
             }
             if (y < 7 && x > 0) {
-                if (board[x - 1][y + 1] == null) {
-                    movex = -1;
-                    movey = 1;
+                m = new Move(x, y, x - 1, y + 1);
+                if (isValidMove(m)) {
+                    fromSpaceX = x;
+                    fromSpaceY = y;
+                    toSpaceX = x - 1;
+                    toSpaceY = y + 1;
                     return true;
                 }
             }
             if (y > 0 && x > 0) {
-                if (board[x - 1][y - 1] == null) {
-                    movex = -1;
-                    movey = -1;
+                m = new Move(x, y, x - 1, y - 1);
+                if (isValidMove(m)) {
+                    fromSpaceX = x;
+                    fromSpaceY = y;
+                    toSpaceX = x - 1;
+                    toSpaceY = y - 1;
                     return true;
                 }
             }
             if (y > 1 && x < 7) {
-                if (board[x + 1][y - 1] == null) {
-                    movex = 1;
-                    movey = -1;
+                m = new Move(x, y, x + 1, y - 1);
+                if (isValidMove(m)) {
+                    fromSpaceX = x;
+                    fromSpaceY = y;
+                    toSpaceX = x + 1;
+                    toSpaceY = y - 1;
                     return true;
                 }
             }
 
             if (x < 7) {
-                if (board[x + 1][y] == null) {
-                    movex = 1;
-                    movey = 0;
+                m = new Move(x, y, x + 1, y);
+                if (isValidMove(m)) {
+                    fromSpaceX = x;
+                    fromSpaceY = y;
+                    toSpaceX = x + 1;
+                    toSpaceY = y;
                     return true;
                 }
             }
             if (y < 7) {
-                if (board[x][y + 1] == null) {
-                    movex = 0;
-                    movey = 1;
+                m = new Move(x, y, x, y + 1);
+                if (isValidMove(m)) {
+                    fromSpaceX = x;
+                    fromSpaceY = y;
+                    toSpaceX = x;
+                    toSpaceY = y + 1;
                     return true;
                 }
             }
             if (x > 0) {
-                if (board[x - 1][y] == null) {
-                    movex = -1;
-                    movey = 0;
+                m = new Move(x, y, x - 1, y);
+                if (isValidMove(m)) {
+                    fromSpaceX = x;
+                    fromSpaceY = y;
+                    toSpaceX = x - 1;
+                    toSpaceY = y;
                     return true;
                 }
             }
             if (y > 0) {
-                if (board[x][y - 1] == null) {
-                    movex = 0;
-                    movey = -1;
+                m = new Move(x, y, x, y - 1);
+                if (isValidMove(m)) {
+                    fromSpaceX = x;
+                    fromSpaceY = y;
+                    toSpaceX = x;
+                    toSpaceY = y - 1;
                     return true;
                 }
             }
-        } else if (board[x][y] instanceof King&& board[x][y].player() == Player.BLACK) {
+        } else if (board[x][y] instanceof King && board[x][y].player() == Player.BLACK) {
             if (y < 7 && x < 7) {
-                if (board[x + 1][y + 1] == null) {
-                    movex = 1;
-                    movey = 1;
+                m = new Move(x, y, x + 1, y + 1);
+                if (isValidMove(m)) {
+                    fromSpaceX = x;
+                    fromSpaceY = y;
+                    toSpaceX = x + 1;
+                    toSpaceY = y + 1;
                     return true;
                 }
             }
             if (y < 7 && x > 0) {
-                if (board[x - 1][y + 1] == null) {
-                    movex = -1;
-                    movey = 1;
+                m = new Move(x, y, x - 1, y + 1);
+                if (isValidMove(m)) {
+                    fromSpaceX = x;
+                    fromSpaceY = y;
+                    toSpaceX = x - 1;
+                    toSpaceY = y + 1;
                     return true;
                 }
             }
             if (y > 0 && x > 0) {
-                if (board[x - 1][y - 1] == null) {
-                    movex = -1;
-                    movey = -1;
+                m = new Move(x, y, x - 1, y - 1);
+                if (isValidMove(m)) {
+                    fromSpaceX = x;
+                    fromSpaceY = y;
+                    toSpaceX = x - 1;
+                    toSpaceY = y - 1;
                     return true;
                 }
             }
             if (y > 1 && x < 7) {
-                if (board[x + 1][y - 1] == null) {
-                    movex = 1;
-                    movey = -1;
+                m = new Move(x, y, x + 1, y - 1);
+                if (isValidMove(m)) {
+                    fromSpaceX = x;
+                    fromSpaceY = y;
+                    toSpaceX = x + 1;
+                    toSpaceY = y - 1;
                     return true;
                 }
             }
 
             if (x < 7) {
-                if (board[x + 1][y] == null) {
-                    movex = 1;
-                    movey = 0;
+                m = new Move(x, y, x + 1, y);
+                if (isValidMove(m)) {
+                    fromSpaceX = x;
+                    fromSpaceY = y;
+                    toSpaceX = x + 1;
+                    toSpaceY = y;
                     return true;
                 }
             }
             if (y < 7) {
-                if (board[x][y + 1] == null) {
-                    movex = 0;
-                    movey = 1;
+                m = new Move(x, y, x, y + 1);
+                if (isValidMove(m)) {
+                    fromSpaceX = x;
+                    fromSpaceY = y;
+                    toSpaceX = x;
+                    toSpaceY = y + 1;
                     return true;
                 }
             }
             if (x > 0) {
-                if (board[x - 1][y] == null) {
-                    movex = -1;
-                    movey = 0;
+                m = new Move(x, y, x - 1, y);
+                if (isValidMove(m)) {
+                    fromSpaceX = x;
+                    fromSpaceY = y;
+                    toSpaceX = x + 1;
+                    toSpaceY = y;
                     return true;
                 }
             }
             if (y > 0) {
-                if (board[x][y - 1] == null) {
-                    movex = 0;
-                    movey = -1;
+                m = new Move(x, y, x, y - 1);
+                if (isValidMove(m)) {
+                    fromSpaceX = x;
+                    fromSpaceY = y;
+                    toSpaceX = x;
+                    toSpaceY = y - 1;
                     return true;
                 }
             }
 
         }
         return valid;
+    }
+
+    private boolean checkToTake() {
+
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j < 7; j++) {
+                // scan for a white piece to attack
+                if (board[i][j] != null && board[i][j].player() == Player.WHITE) {
+
+                    // scan for black pieces
+                    for (int x = 0; x < 7; x++) {
+                        for (int y = 0; y < 7; y++) {
+                            if (board[x][y] != null && board[x][y].player() == Player.BLACK) {
+                                m = new Move(x, y, i, j);
+                                if (isValidMove(m)) {
+                                    fromSpaceX = x;
+                                    fromSpaceY = y;
+                                    toSpaceX = i;
+                                    toSpaceY = j;
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 
     /*************************************************************
@@ -481,45 +610,31 @@ public class ChessModel implements IChessModel {
          *      i. check to see if that piece is in danger of being removed, if so, move a different piece.
          */
 
-
         int posX = 7;
         int posY = 7;
-        int moveToX;
-        int moveToY;
         Random rn = new Random();
 
 
         if (currentPlayer() == Player.BLACK) {
-            // add in a function of randomly moving valid pieces to spots where they cannot be taken/ can take the king.
+            // if in check get out of check
 
-            while ( !canMakeMoveAI(posX, posY) ) {
-                posX = rn.nextInt(8);
-                posY = rn.nextInt(8);
-                System.out.println("found!");
+            // if you can put the other person in check, do it
+
+            // if you can take one of their pieces, do it
+            if (checkToTake()) {
+                m = new Move(fromSpaceX, fromSpaceY, toSpaceX, toSpaceY);
+                move(m);
             }
-            moveToX = posX + movex;
-            moveToY = posY + movey;
-            if (board[moveToX][moveToY] != null) { //check to make sure that there is a piece being taken
-                if (board[moveToX][moveToY] instanceof Pawn) { // store info for the last move made, used for the undo button
-                    stack.push(1);
-                } else if (board[moveToX][moveToY] instanceof Knight) {
-                    stack.push(2);
-                } else if (board[moveToX][moveToY] instanceof Bishop) {
-                    stack.push(3);
-                } else if (board[moveToX][moveToY] instanceof Rook) {
-                    stack.push(4);
-                } else if (board[moveToX][moveToY] instanceof Queen) {
-                    stack.push(5);
+            else {
+                // otherwise make a random move
+                while (!randomMove(posX, posY)) {
+                    posX = rn.nextInt(8);
+                    posY = rn.nextInt(8);
+                    System.out.println("found!");
                 }
-            } else {
-                stack.push(0); // if no piece is taken, show that it is just an empty space being moved to.
+                m = new Move(fromSpaceX, fromSpaceY, toSpaceX, toSpaceY);
+                move(m);
             }
-            stack.push(posX); // store more information on the last move made for the undo button
-            stack.push(posY);
-            stack.push(moveToX);
-            stack.push(moveToY);
-            setPiece(posX + movex, posY + movey, pieceAt(posX, posY));
-            board[posX][posY] = null;
 
             setNextPlayer();
 

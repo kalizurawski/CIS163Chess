@@ -20,6 +20,9 @@ public class Pawn extends ChessPiece {
             return valid;
 
         if (player() == Player.WHITE) {                                       //WHITE to < from
+            if(board[move.toRow][move.toColumn] != null) {
+                return valid;
+            }
             if (move.toRow > move.fromRow) {
                 return valid;
             }
@@ -44,6 +47,9 @@ public class Pawn extends ChessPiece {
                 return valid;
             }
             if (move.fromColumn == move.toColumn) {
+                if(board[move.toRow][move.toColumn] != null) {
+                    return valid;
+                }
                 if (move.fromRow - move.toRow < -2) {
                     return valid;
                 }
@@ -53,7 +59,7 @@ public class Pawn extends ChessPiece {
             } else if (move.toColumn - move.fromColumn > 1 || move.toColumn - move.fromColumn < -1) {
                 return valid;
             } else {                                                           //moved one space left or right
-                if (move.fromRow - move.toRow != -1 || board[move.toRow][move.toColumn] == null) {
+                if (move.fromRow - move.toRow != -1 || board[move.toRow][move.toColumn] != null) {
                     return valid;
                 }
             }
