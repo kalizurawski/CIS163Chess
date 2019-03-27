@@ -38,6 +38,9 @@ public class Pawn extends ChessPiece {
                 return valid;
             }
             if (move.fromColumn == move.toColumn) {
+                if(board[move.toRow][move.toColumn] != null) {
+                    return valid;
+                }
                 if (move.fromRow - move.toRow > 2) {
                     return valid;
                 }

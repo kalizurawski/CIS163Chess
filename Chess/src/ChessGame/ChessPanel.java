@@ -194,7 +194,7 @@ public class ChessPanel extends JPanel {
      ************************************************************/
     private void updateTurn() {
         model.setNextPlayer();                      // switch who's turn it is
-        model.AI();
+        //model.AI();
         displayBoard();
     }
 
