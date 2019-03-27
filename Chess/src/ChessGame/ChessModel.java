@@ -99,13 +99,13 @@ public class ChessModel implements IChessModel {
         } else {
             stack.push(0); // if no piece is taken, show that it is just an empty space being moved to.
         }
-
-        board[move.toRow][move.toColumn] = board[move.fromRow][move.fromColumn];// move the piece
-
         stack.push(move.fromRow); // store more information on the last move made for the undo button
         stack.push(move.fromColumn);
         stack.push(move.toRow);
         stack.push(move.toColumn);
+        board[move.toRow][move.toColumn] = board[move.fromRow][move.fromColumn];// move the piece
+
+
 
 
         board[move.fromRow][move.fromColumn] = null; // remove the peices from its last position.
@@ -216,166 +216,242 @@ public class ChessModel implements IChessModel {
     public boolean canMakeMoveAI(int x, int y) {
         boolean valid = false;
         if (board[x][y] instanceof Pawn) {
-            if (board[x + 1][y] == null && x < 7) {
-                movex = 1;
-                return true;
+            if (x < 7) {
+                if (board[x + 1][y] == null) {
+                    movex = 1;
+                    return true;
+                }
             }
         } else if (board[x][y] instanceof Knight) {
-            if (board[x + 2][y + 1] == null && y < 7 && x < 6) {
-                movex = 1;
-                movey = 1;
-                return true;
-            } else if (board[x + 2][y - 1] == null && y > 0 && x < 6) {
-                movex = 2;
-                movey = -1;
-                return true;
-            } else if (board[x - 2][y + 1] == null && y < 7 && x > 1) {
-                movex = -2;
-                movey = 1;
-                return true;
-            } else if (board[x - 2][y - 1] == null && y > 0 && x > 1) {
-                movex = -2;
-                movey = -1;
-                return true;
-            } else if (board[x + 1][y + 2] == null && y < 6 && x < 7) {
-                movex = 1;
-                movey = 2;
-                return true;
-            } else if (board[x - 1][y + 2] == null && y < 6 && x > 0) {
-                movex = -1;
-                movey = 2;
-                return true;
-            } else if (board[x - 1][y - 2] == null && y > 1 && x > 0) {
-                movex = -1;
-                movey = -2;
-                return true;
-            } else if (board[x + 1][y - 2] == null && y > 1 && x < 7) {
-                movex = 1;
-                movey = -2;
-                return true;
+            if (y < 7 && x < 6) {
+                if (board[x + 2][y + 1] == null) {
+                    movex = 1;
+                    movey = 1;
+                    return true;
+                }
+            }
+            if (y > 0 && x < 6) {
+                if (board[x + 2][y - 1] == null) {
+                    movex = 2;
+                    movey = -1;
+                    return true;
+                }
+            }
+            if (y < 7 && x > 1) {
+                if (board[x - 2][y + 1] == null) {
+                    movex = -2;
+                    movey = 1;
+                    return true;
+                }
+            }
+            if (y > 0 && x > 1) {
+                if (board[x - 2][y - 1] == null) {
+                    movex = -2;
+                    movey = -1;
+                    return true;
+                }
+            }
+            if (y < 6 && x < 7) {
+                if (board[x + 1][y + 2] == null) {
+                    movex = 1;
+                    movey = 2;
+                    return true;
+                }
+            }
+            if (y < 6 && x > 0) {
+                if (board[x - 1][y + 2] == null) {
+                    movex = -1;
+                    movey = 2;
+                    return true;
+                }
+            }
+            if (y > 1 && x > 0) {
+                if (board[x - 1][y - 2] == null) {
+                    movex = -1;
+                    movey = -2;
+                    return true;
+                }
+            }
+            if (y > 1 && x < 7) {
+                if (board[x + 1][y - 2] == null) {
+                    movex = 1;
+                    movey = -2;
+                    return true;
+                }
             }
         } else if (board[x][y] instanceof Rook) {
-            if (board[x + 1][y] == null && x < 7) {
-                movex = 1;
-                movey = 0;
-                return true;
-            } else if (board[x][y + 1] == null && y < 7) {
-                movex = 0;
-                movey = 1;
-                return true;
-            } else if (board[x - 1][y] == null && x > 0) {
-                movex = -1;
-                movey = 0;
-                return true;
-            } else if (board[x][y - 1] == null && y > 0) {
-                movex = 0;
-                movey = -1;
-                return true;
+            if (x < 7) {
+                if (board[x + 1][y] == null) {
+                    movex = 1;
+                    movey = 0;
+                    return true;
+                }
+            }
+            if (y < 7) {
+                if (board[x][y + 1] == null) {
+                    movex = 0;
+                    movey = 1;
+                    return true;
+                }
+            }
+            if (x > 0) {
+                if (board[x - 1][y] == null) {
+                    movex = -1;
+                    movey = 0;
+                    return true;
+                }
+            }
+            if (y > 0) {
+                if (board[x][y - 1] == null) {
+                    movex = 0;
+                    movey = -1;
+                    return true;
+                }
             }
         } else if (board[x][y] instanceof Bishop) {
-            if (board[x + 1][y + 1] == null && y < 7 && x < 7) {
-                movex = 1;
-                movey = 1;
-                return true;
-            } else if (board[x - 1][y + 1] == null && y < 7 && x > 0) {
-                movex = -1;
-                movey = 1;
-                return true;
-            } else if (board[x - 1][y - 1] == null && y > 0 && x > 0) {
-                movex = -1;
-                movey = -1;
-                return true;
-            } else if (board[x + 1][y - 1] == null && y > 1 && x < 7) {
-                movex = 1;
-                movey = -1;
-                return true;
+            if (y < 7 && x < 7) {
+                if (board[x + 1][y + 1] == null) {
+                    movex = 1;
+                    movey = 1;
+                    return true;
+                }
+            }
+            if (y < 7 && x > 0) {
+                if (board[x - 1][y + 1] == null) {
+                    movex = -1;
+                    movey = 1;
+                    return true;
+                }
+            }
+            if (y > 0 && x > 0) {
+                if (board[x - 1][y - 1] == null) {
+                    movex = -1;
+                    movey = -1;
+                    return true;
+                }
+            }
+            if (y > 1 && x < 7) {
+                if (board[x + 1][y - 1] == null) {
+                    movex = 1;
+                    movey = -1;
+                    return true;
+                }
             }
         } else if (board[x][y] instanceof Queen) {
-            if (board[x + 1][y + 1] == null && y < 7 && x < 7) {
-                movex = 1;
-                movey = 1;
-                return true;
-            } else if (board[x - 1][y + 1] == null && y < 7 && x > 0) {
-                movex = -1;
-                movey = 1;
-                return true;
-            } else if (board[x - 1][y - 1] == null && y > 0 && x > 0) {
-                movex = -1;
-                movey = -1;
-                return true;
-            } else if (board[x + 1][y - 1] == null && y > 1 && x < 7) {
-                movex = 1;
-                movey = -1;
-                return true;
-            }else if (board[x + 1][y] == null && x < 7) {
-                movex = 1;
-                movey = 0;
-                return true;
-            } else if (board[x][y + 1] == null && y < 7) {
-                movex = 0;
-                movey = 1;
-                return true;
-            } else if (board[x - 1][y] == null && x > 0) {
-                movex = -1;
-                movey = 0;
-                return true;
-            } else if (board[x][y - 1] == null && y > 0) {
-                movex = 0;
-                movey = -1;
-                return true;
+            if (y < 7 && x < 7) {
+                if (board[x + 1][y + 1] == null) {
+                    movex = 1;
+                    movey = 1;
+                    return true;
+                }
+            }
+            if (y < 7 && x > 0) {
+                if (board[x - 1][y + 1] == null) {
+                    movex = -1;
+                    movey = 1;
+                    return true;
+                }
+            }
+            if (y > 0 && x > 0) {
+                if (board[x - 1][y - 1] == null) {
+                    movex = -1;
+                    movey = -1;
+                    return true;
+                }
+            }
+            if (y > 1 && x < 7) {
+                if (board[x + 1][y - 1] == null) {
+                    movex = 1;
+                    movey = -1;
+                    return true;
+                }
             }
 
-        } else if (board[x][y] instanceof King) {
-            if (board[x + 1][y + 1] == null && y < 7 && x < 7) {
-                movex = 1;
-                movey = 1;
-                return true;
-            } else if (board[x - 1][y + 1] == null && y < 7 && x > 0) {
-                movex = -1;
-                movey = 1;
-                return true;
-            } else if (board[x - 1][y - 1] == null && y > 0 && x > 0) {
-                movex = -1;
-                movey = -1;
-                return true;
-            } else if (board[x + 1][y - 1] == null && y > 1 && x < 7) {
-                movex = 1;
-                movey = -1;
-                return true;
+            if (x < 7) {
+                if (board[x + 1][y] == null) {
+                    movex = 1;
+                    movey = 0;
+                    return true;
+                }
             }
-        } else if (board[x][y] instanceof Queen) {
-            if (board[x + 1][y + 1] == null && y < 7 && x < 7) {
-                movex = 1;
-                movey = 1;
-                return true;
-            } else if (board[x - 1][y + 1] == null && y < 7 && x > 0) {
-                movex = -1;
-                movey = 1;
-                return true;
-            } else if (board[x - 1][y - 1] == null && y > 0 && x > 0) {
-                movex = -1;
-                movey = -1;
-                return true;
-            } else if (board[x + 1][y - 1] == null && y > 1 && x < 7) {
-                movex = 1;
-                movey = -1;
-                return true;
-            }else if (board[x + 1][y] == null && x < 7) {
-                movex = 1;
-                movey = 0;
-                return true;
-            } else if (board[x][y + 1] == null && y < 7) {
-                movex = 0;
-                movey = 1;
-                return true;
-            } else if (board[x - 1][y] == null && x > 0) {
-                movex = -1;
-                movey = 0;
-                return true;
-            } else if (board[x][y - 1] == null && y > 0) {
-                movex = 0;
-                movey = -1;
-                return true;
+            if (y < 7) {
+                if (board[x][y + 1] == null) {
+                    movex = 0;
+                    movey = 1;
+                    return true;
+                }
+            }
+            if (x > 0) {
+                if (board[x - 1][y] == null) {
+                    movex = -1;
+                    movey = 0;
+                    return true;
+                }
+            }
+            if (y > 0) {
+                if (board[x][y - 1] == null) {
+                    movex = 0;
+                    movey = -1;
+                    return true;
+                }
+            }
+        } else if (board[x][y] instanceof King) {
+            if (y < 7 && x < 7) {
+                if (board[x + 1][y + 1] == null) {
+                    movex = 1;
+                    movey = 1;
+                    return true;
+                }
+            }
+            if (y < 7 && x > 0) {
+                if (board[x - 1][y + 1] == null) {
+                    movex = -1;
+                    movey = 1;
+                    return true;
+                }
+            }
+            if (y > 0 && x > 0) {
+                if (board[x - 1][y - 1] == null) {
+                    movex = -1;
+                    movey = -1;
+                    return true;
+                }
+            }
+            if (y > 1 && x < 7) {
+                if (board[x + 1][y - 1] == null) {
+                    movex = 1;
+                    movey = -1;
+                    return true;
+                }
+            }
+
+            if (x < 7) {
+                if (board[x + 1][y] == null) {
+                    movex = 1;
+                    movey = 0;
+                    return true;
+                }
+            }
+            if (y < 7) {
+                if (board[x][y + 1] == null) {
+                    movex = 0;
+                    movey = 1;
+                    return true;
+                }
+            }
+            if (x > 0) {
+                if (board[x - 1][y] == null) {
+                    movex = -1;
+                    movey = 0;
+                    return true;
+                }
+            }
+            if (y > 0) {
+                if (board[x][y - 1] == null) {
+                    movex = 0;
+                    movey = -1;
+                    return true;
+                }
             }
 
         }
@@ -408,31 +484,53 @@ public class ChessModel implements IChessModel {
 
         int posX = 7;
         int posY = 7;
-        int x = 7;
-        int y = 7;
+        int moveToX;
+        int moveToY;
         Random rn = new Random();
-        Move m = new Move();
-        boolean moved = false;
+
 
         if (currentPlayer() == Player.BLACK) {
             // add in a function of randomly moving valid pieces to spots where they cannot be taken/ can take the king.
 
-            while (board[posX][posY].player() != currentPlayer() && !canMakeMoveAI(posX, posY)) {
+            while ( !canMakeMoveAI(posX, posY)) {
                 posX = rn.nextInt(7);
                 posY = rn.nextInt(7);
                 System.out.println("found!");
             }
-                setPiece(posX+movex, posY+movey, pieceAt(posX, posY) );
-                board[posX][posY] = null;
-
+            moveToX = posX + movex;
+            moveToY = posY = movey;
+            if (board[moveToX][moveToY] != null) { //check to make sure that there is a piece being taken
+                if (board[moveToX][moveToY] instanceof Pawn) { // store info for the last move made, used for the undo button
+                    stack.push(1);
+                } else if (board[moveToX][moveToY] instanceof Knight) {
+                    stack.push(2);
+                } else if (board[moveToX][moveToY] instanceof Bishop) {
+                    stack.push(3);
+                } else if (board[moveToX][moveToY] instanceof Rook) {
+                    stack.push(4);
+                } else if (board[moveToX][moveToY] instanceof Queen) {
+                    stack.push(5);
+                }
+            } else {
+                stack.push(0); // if no piece is taken, show that it is just an empty space being moved to.
             }
+            stack.push(posX); // store more information on the last move made for the undo button
+            stack.push(posY);
+            stack.push(moveToX);
+            stack.push(moveToY);
+            setPiece(posX + movex, posY + movey, pieceAt(posX, posY));
+            board[posX][posY] = null;
+
+            setNextPlayer();
 
         }
 
-
-        // if a piece can be taken, try to move it (potentially add in a priority for more important pieces, or just go for first one scanned)
-
-        //if everything is fine from above, randomly move a piece forward.
-
     }
+
+
+    // if a piece can be taken, try to move it (potentially add in a priority for more important pieces, or just go for first one scanned)
+
+    //if everything is fine from above, randomly move a piece forward.
+
+}
 

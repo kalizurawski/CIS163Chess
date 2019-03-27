@@ -205,6 +205,7 @@ public class ChessPanel extends JPanel {
         else {
             turn.setText("Black's Turn");
             model.AI();
+            displayBoard();
         }
 
     }
