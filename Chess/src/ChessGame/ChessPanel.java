@@ -51,7 +51,6 @@ public class ChessPanel extends JPanel {
     /**
      * turn variables
      **/
-    private JLabel turn;
     private JLabel check;
 
 
@@ -84,8 +83,6 @@ public class ChessPanel extends JPanel {
         boardpanel.setPreferredSize(new Dimension(600, 600));
 
         // add extras
-        turn = new JLabel("White's Turn");
-        buttonpanel.add(turn);
         check = new JLabel("");
         buttonpanel.add(check);
         undo = new JButton("UNDO");
@@ -214,10 +211,7 @@ public class ChessPanel extends JPanel {
      ************************************************************/
     private void updateTurn() {
         model.setNextPlayer();                      // switch who's turn it is
-        if (model.currentPlayer() == Player.WHITE)
-            turn.setText("White's Turn");
-        else
-            turn.setText("Black's Turn");
+        model.AI();
     }
 
     /*************************************************************
@@ -300,8 +294,10 @@ public class ChessPanel extends JPanel {
         public void actionPerformed(ActionEvent event) {
 
             // if it was the undo button
-            if (undo == event.getSource()) ;
-                // TODO : link to undo function
+            if (undo == event.getSource()) {
+                model.undo();
+                displayBoard();
+            }
             else {
                 // if it was the board
                 for (int r = 0; r < model.numRows(); r++)
