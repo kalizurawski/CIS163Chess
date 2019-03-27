@@ -215,17 +215,17 @@ public class ChessModel implements IChessModel {
 
     public boolean canMakeMoveAI(int x, int y) {
         boolean valid = false;
-        if (board[x][y] instanceof Pawn) {
+        if (board[x][y] instanceof Pawn && board[x][y].player() == Player.BLACK) {
             if (x < 7) {
                 if (board[x + 1][y] == null) {
                     movex = 1;
                     return true;
                 }
             }
-        } else if (board[x][y] instanceof Knight) {
+        } else if (board[x][y] instanceof Knight&& board[x][y].player() == Player.BLACK) {
             if (y < 7 && x < 6) {
                 if (board[x + 2][y + 1] == null) {
-                    movex = 1;
+                    movex = 2;
                     movey = 1;
                     return true;
                 }
@@ -279,7 +279,7 @@ public class ChessModel implements IChessModel {
                     return true;
                 }
             }
-        } else if (board[x][y] instanceof Rook) {
+        } else if (board[x][y] instanceof Rook&& board[x][y].player() == Player.BLACK) {
             if (x < 7) {
                 if (board[x + 1][y] == null) {
                     movex = 1;
@@ -308,7 +308,7 @@ public class ChessModel implements IChessModel {
                     return true;
                 }
             }
-        } else if (board[x][y] instanceof Bishop) {
+        } else if (board[x][y] instanceof Bishop&& board[x][y].player() == Player.BLACK) {
             if (y < 7 && x < 7) {
                 if (board[x + 1][y + 1] == null) {
                     movex = 1;
@@ -337,7 +337,7 @@ public class ChessModel implements IChessModel {
                     return true;
                 }
             }
-        } else if (board[x][y] instanceof Queen) {
+        } else if (board[x][y] instanceof Queen&& board[x][y].player() == Player.BLACK) {
             if (y < 7 && x < 7) {
                 if (board[x + 1][y + 1] == null) {
                     movex = 1;
@@ -395,7 +395,7 @@ public class ChessModel implements IChessModel {
                     return true;
                 }
             }
-        } else if (board[x][y] instanceof King) {
+        } else if (board[x][y] instanceof King&& board[x][y].player() == Player.BLACK) {
             if (y < 7 && x < 7) {
                 if (board[x + 1][y + 1] == null) {
                     movex = 1;
@@ -492,13 +492,13 @@ public class ChessModel implements IChessModel {
         if (currentPlayer() == Player.BLACK) {
             // add in a function of randomly moving valid pieces to spots where they cannot be taken/ can take the king.
 
-            while ( !canMakeMoveAI(posX, posY)) {
-                posX = rn.nextInt(7);
-                posY = rn.nextInt(7);
+            while ( !canMakeMoveAI(posX, posY) ) {
+                posX = rn.nextInt(8);
+                posY = rn.nextInt(8);
                 System.out.println("found!");
             }
             moveToX = posX + movex;
-            moveToY = posY = movey;
+            moveToY = posY + movey;
             if (board[moveToX][moveToY] != null) { //check to make sure that there is a piece being taken
                 if (board[moveToX][moveToY] instanceof Pawn) { // store info for the last move made, used for the undo button
                     stack.push(1);
