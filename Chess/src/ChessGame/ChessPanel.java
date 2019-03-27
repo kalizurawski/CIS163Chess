@@ -203,6 +203,7 @@ public class ChessPanel extends JPanel {
             turn.setText("White's Turn");
         else
             turn.setText("Black's Turn");
+
     }
 
     /*************************************************************

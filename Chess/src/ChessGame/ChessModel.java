@@ -141,17 +141,23 @@ public class ChessModel implements IChessModel {
     }
     /*************************************************************
      *
+     *
+     *
      ************************************************************/
     public IChessPiece pieceAt(int row, int column) {
         return board[row][column];
     }
     /*************************************************************
      *
+     *
+     *
      ************************************************************/
     public void setNextPlayer() {
         player = player.next();
     }
     /*************************************************************
+     *
+     *
      *
      ************************************************************/
     public void setPiece(int row, int column, IChessPiece piece) {
@@ -185,10 +191,15 @@ public class ChessModel implements IChessModel {
         setNextPlayer();
     }
 
-    public boolean canMakeMove(int x, int y){
+    public boolean canMakeMoveAI(int x, int y){
         boolean valid = false;
                 if (board[x][y] instanceof Pawn){
+                    if(board[x-1][y+1] == null){
+                        valid = true;
+                    } else if (board[x - 1][y + 1] != null || board[x-1][y-1] != null) {
+                        valid = true;
 
+                    }
                 }
                 else if (board[x][y] instanceof Knight){
 
@@ -209,6 +220,8 @@ public class ChessModel implements IChessModel {
     }
 
     /*************************************************************
+     *
+     *
      *
      ************************************************************/
     public void AI() {
@@ -234,6 +247,7 @@ public class ChessModel implements IChessModel {
 
             if(currentPlayer() == Player.BLACK){
                 // add in a function of randomly moving valid pieces to spots where they cannot be taken/ can take the king.
+                setPiece(3,4,pieceAt(1,4));
                 if (inCheck(Player.BLACK)){
                     // try to move king
                 }
