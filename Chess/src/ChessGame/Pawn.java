@@ -1,16 +1,28 @@
 package ChessGame;
 
 public class Pawn extends ChessPiece {
-
+    /*******************************
+     * instantiates the pawn class based on player
+     * @param player color of owner
+     */
     public Pawn(Player player) {
         super(player);
     }
 
+    /************************************
+     * returns the string of piece type
+     * @return string "Pawn"
+     */
     public String type() {
         return "Pawn";
     }
 
-    // determines if the move is valid for a pawn piece
+    /***************************************
+     * returns if the given move is valid
+     * @param move the move, fromRow,fromCol,toRow,toCol
+     * @param board the boards current state
+     * @return boolean of if it is valid
+     */
     public boolean isValidMove(Move move, IChessPiece[][] board) {
         Move prevMove = new Move();
         boolean valid = false;
@@ -20,21 +32,19 @@ public class Pawn extends ChessPiece {
             return valid;
 
         if (player() == Player.WHITE) {                                       //WHITE to < from
+            //en passant check here
+
             if (move.toRow > move.fromRow) {
                 return valid;
             }
             if (move.fromColumn == move.toColumn) {
-                if(move.fromRow - move.toRow == 2){
-                    if(board[move.fromRow - 1][move.fromColumn] != null)
-                        return valid;
+                if(board[move.toRow][move.toColumn] != null) {
+                    return valid;
                 }
                 if (move.fromRow - move.toRow > 2) {
                     return valid;
                 }
                 if (move.fromRow - move.toRow == 2 && move.fromRow != 6) {
-                    return valid;
-                }
-                if(board[move.toRow][move.toColumn] != null) {
                     return valid;
                 }
             } else if (move.toColumn - move.fromColumn > 1 || move.toColumn - move.fromColumn < -1) {
@@ -46,14 +56,13 @@ public class Pawn extends ChessPiece {
             }
             valid = true;
         } else {                                                              //BLACK to > from
-            //en pasant check
+            //en pasant check here
             if (move.toRow < move.fromRow) {
                 return valid;
             }
             if (move.fromColumn == move.toColumn) {
-                if(move.fromRow - move.toRow == -2){
-                    if(board[move.fromRow + 1][move.fromColumn] != null)
-                        return valid;
+                if(board[move.toRow][move.toColumn] != null) {
+                    return valid;
                 }
                 if (move.fromRow - move.toRow < -2) {
                     return valid;
@@ -61,13 +70,10 @@ public class Pawn extends ChessPiece {
                 if (move.fromRow - move.toRow == -2 && move.fromRow != 1) {
                     return valid;
                 }
-                if(board[move.toRow][move.toColumn] != null) {
-                    return valid;
-                }
             } else if (move.toColumn - move.fromColumn > 1 || move.toColumn - move.fromColumn < -1) {
                 return valid;
             } else {                                                           //moved one space left or right
-                if (move.fromRow - move.toRow != -1 || board[move.toRow][move.toColumn] == null) {
+                if (move.fromRow - move.toRow != -1 || board[move.toRow][move.toColumn] != null) {
                     return valid;
                 }
             }
@@ -76,4 +82,3 @@ public class Pawn extends ChessPiece {
         return valid;
     }
 }
-
