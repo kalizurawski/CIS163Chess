@@ -201,8 +201,11 @@ public class ChessPanel extends JPanel {
         model.setNextPlayer();                      // switch who's turn it is
         if (model.currentPlayer() == Player.WHITE)
             turn.setText("White's Turn");
-        else
+
+        else {
             turn.setText("Black's Turn");
+            model.AI();
+        }
 
     }
 
