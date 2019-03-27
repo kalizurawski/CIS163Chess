@@ -1,15 +1,27 @@
 package ChessGame;
 
 public class Knight extends ChessPiece {
-
+    /*************************
+     * instantiates the piece by player
+     * @param player the player color
+     */
     public Knight(Player player) {
         super(player);
     }
 
+    /**************************
+     * returns the string of piece type
+     * @return string "Knight"
+     */
     public String type() {
         return "Knight";
     }
-
+    /***************************************
+     * returns if the given move is valid
+     * @param move the move, fromRow,fromCol,toRow,toCol
+     * @param board the boards current state
+     * @return boolean of if it is valid
+     */
     public boolean isValidMove(Move move, IChessPiece[][] board){
         boolean valid = false;
         int delRow = move.toRow -  move.fromRow;
