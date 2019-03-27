@@ -13,6 +13,8 @@ public class ChessModel implements IChessModel {
 
     /*************************************************************
      *
+     *
+     *
      ************************************************************/
     public ChessModel() {
         board = new IChessPiece[8][8];
@@ -44,6 +46,8 @@ public class ChessModel implements IChessModel {
     }
     /*************************************************************
      *
+     *
+     *
      ************************************************************/
     public boolean isComplete() {
         boolean valid = false;
@@ -51,6 +55,8 @@ public class ChessModel implements IChessModel {
         return valid;
     }
     /*************************************************************
+     *
+     *
      *
      ************************************************************/
     public boolean isValidMove(Move move) {
@@ -64,6 +70,8 @@ public class ChessModel implements IChessModel {
         return valid;
     }
     /*************************************************************
+     *
+     *
      *
      ************************************************************/
     public void move(Move move) {
@@ -97,6 +105,8 @@ public class ChessModel implements IChessModel {
     }
     /*************************************************************
      *
+     *
+     *
      ************************************************************/
     public boolean inCheck(Player p) {
         // add in code here to scan and check if the current player is in check
@@ -107,17 +117,23 @@ public class ChessModel implements IChessModel {
 
     /*************************************************************
      *
+     *
+     *
      ************************************************************/
     public Player currentPlayer() {
         return player;
     }
     /*************************************************************
      *
+     *
+     *
      ************************************************************/
     public int numRows() {
         return 8;
     }
     /*************************************************************
+     *
+     *
      *
      ************************************************************/
     public int numColumns() {
@@ -169,6 +185,29 @@ public class ChessModel implements IChessModel {
         setNextPlayer();
     }
 
+    public boolean canMakeMove(int x, int y){
+        boolean valid = false;
+                if (board[x][y] instanceof Pawn){
+
+                }
+                else if (board[x][y] instanceof Knight){
+
+                }
+                else if (board[x][y] instanceof Rook){
+
+                }
+                else if (board[x][y] instanceof Bishop){
+
+                }
+                else if (board[x][y] instanceof Queen){
+
+                }
+                else if (board[x][y] instanceof King){
+
+                }
+        return valid;
+    }
+
     /*************************************************************
      *
      ************************************************************/
@@ -189,18 +228,18 @@ public class ChessModel implements IChessModel {
          *d. Move a piece (pawns first) forward toward opponent king
          *      i. check to see if that piece is in danger of being removed, if so, move a different piece.
          */
-        if (inCheck(player)) {
-            // make it so valid move is only moves that will protect the king
+        int posX = 10;
+        int posY = 10;
+        Random rn = new Random();
 
-        }
-        else{
             if(currentPlayer() == Player.BLACK){
                 // add in a function of randomly moving valid pieces to spots where they cannot be taken/ can take the king.
-                Random rn = new Random();
-
+                if (inCheck(Player.BLACK)){
+                    // try to move king
+                }
 
             }
-        }
+
 
         // if a piece can be taken, try to move it (potentially add in a priority for more important pieces, or just go for first one scanned)
 
