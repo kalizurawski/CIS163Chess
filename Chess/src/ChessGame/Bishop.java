@@ -2,14 +2,28 @@ package ChessGame;
 
 public class Bishop extends ChessPiece {
 
+    /***********************************
+     * Instantiates the Bishop based on the player
+     * @param player
+     */
     public Bishop(Player player) {
         super(player);
     }
 
+    /***********************************
+     * Returns the object type "Bishop"
+     * @return string "Bishop"
+     */
     public String type() {
         return "Bishop";
     }
 
+    /***************************************
+     * returns if the given move is valid
+     * @param move the move, fromRow,fromCol,toRow,toCol
+     * @param board the boards current state
+     * @return boolean of if it is valid
+     */
     public boolean isValidMove(Move move, IChessPiece[][] board) {
 
         boolean valid = false;
@@ -34,8 +48,9 @@ public class Bishop extends ChessPiece {
         if(direction == ""){
             direction = "Not in path";
             return valid;}
-        System.out.println(direction);
 
+
+            //checks the movement based on the direction of travel
         switch (direction){
             case "NE":
                 for(int n = 1; move.fromRow + n < 8 && move.fromColumn + n < 8 ; n++){
@@ -69,7 +84,7 @@ public class Bishop extends ChessPiece {
                         return valid;
                 }
                 break;
-        }//switch end
+        }
 
         return valid;
 

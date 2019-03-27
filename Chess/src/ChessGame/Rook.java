@@ -1,20 +1,28 @@
 package ChessGame;
 
 public class Rook extends ChessPiece {
-
+    /***********************************
+     * instantiates a piece based on player
+     * @param player player color
+     */
     public Rook(Player player) {
-
         super(player);
-
     }
 
+    /**********************************
+     * returns the type of piece
+     * @return string "Rook"
+     */
     public String type() {
-
         return "Rook";
-
     }
 
-    // determines if the move is valid for a rook piece
+    /***************************************
+     * returns if the given move is valid
+     * @param move the move, fromRow,fromCol,toRow,toCol
+     * @param board the boards current state
+     * @return boolean of if it is valid
+     */
     public boolean isValidMove(Move move, IChessPiece[][] board) {
         boolean valid = false;
 

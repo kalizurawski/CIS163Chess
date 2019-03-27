@@ -1,16 +1,28 @@
 package ChessGame;
 
 public class Pawn extends ChessPiece {
-
+    /*******************************
+     * instantiates the pawn class based on player
+     * @param player color of owner
+     */
     public Pawn(Player player) {
         super(player);
     }
 
+    /************************************
+     * returns the string of piece type
+     * @return string "Pawn"
+     */
     public String type() {
         return "Pawn";
     }
 
-    // determines if the move is valid for a pawn piece
+    /***************************************
+     * returns if the given move is valid
+     * @param move the move, fromRow,fromCol,toRow,toCol
+     * @param board the boards current state
+     * @return boolean of if it is valid
+     */
     public boolean isValidMove(Move move, IChessPiece[][] board) {
         Move prevMove = new Move();
         boolean valid = false;
@@ -20,9 +32,8 @@ public class Pawn extends ChessPiece {
             return valid;
 
         if (player() == Player.WHITE) {                                       //WHITE to < from
-            if(board[move.toRow][move.toColumn] != null) {
-                return valid;
-            }
+            //en passant check here
+
             if (move.toRow > move.fromRow) {
                 return valid;
             }
@@ -42,7 +53,7 @@ public class Pawn extends ChessPiece {
             }
             valid = true;
         } else {                                                              //BLACK to > from
-            //en pasant check
+            //en pasant check here
             if (move.toRow < move.fromRow) {
                 return valid;
             }
